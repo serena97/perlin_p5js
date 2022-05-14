@@ -24,8 +24,8 @@ function Particle() {
         this.acc.add(force);
     }
 
-    this.show = function() {
-        stroke(0, 5);
+    this.show = function(_color) {
+        stroke(_color.r, _color.g, _color.b, 5);
         strokeWeight(1)
         line(this.pos.x, this.pos.y, this.prevPos.x, this.prevPos.y)
         this.updatePrev()

@@ -6,6 +6,16 @@ var zoff = 0
 var particles = []
 var flowField;
 
+let colors;
+
+class Color {
+    constructor(r, g, b) {
+        this.r = r;
+        this.g = g;
+        this.b = b;
+    }
+}
+
 function setup() {
     createCanvas(400, 400);
 	cols = floor(width / scl);
@@ -16,7 +26,19 @@ function setup() {
         particles[i] = new Particle()
     }
     background(255)
+    const red = new Color(255, 0, 0)
+    const orange = new Color(255, 165, 0, 5)
+    const yellow = new Color(255, 255, 0, 5)
+    const green = new Color(0, 255, 0, 5)
+    const blue = new Color(0, 0, 255, 5)
+    const indigo = new Color(75, 0, 130, 5)
+    const violet = new Color(148, 0, 211,5)
+    colors = [red, orange, yellow, green, blue, indigo, violet]
+}
 
+function getColor(i) {
+    const index = floor(map(i, 0, particles.length, 0, colors.length))
+    return colors[index]
 }
 
 function draw() {
@@ -30,15 +52,6 @@ function draw() {
             v.setMag(1);
             flowField[index] = v
             xoff += inc;
-            // stroke(0, 50);
-            // push()
-            // translate(x * scl, y*scl)
-            // rotate(v.heading())
-            // strokeWeight(1)
-            // line(0, 0, scl, 0)
-            // pop()
-            // fill(r)
-            // rect(x * scl, y * scl, scl, scl)
         }
         yoff += inc;
 
@@ -48,10 +61,10 @@ function draw() {
         particles[i].follow(flowField)
         particles[i].update();
         particles[i].edges();
-        particles[i].show();
+        particles[i].show(getColor(i));
     }
 
-    if(zoff > 15) {
+    if(zoff > 10) {
         noLoop()
     }
 
